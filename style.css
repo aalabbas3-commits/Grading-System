@@ -993,3 +993,35 @@ input:focus{
     margin-top:0 !important;
   }
 }
+
+
+/* ===== v1.2.3 Text placement + mobile input zoom fix ===== */
+
+.hero-copy{
+  padding-block:14px !important;
+}
+
+.field-hint{
+  margin:-2px 0 7px;
+  color:#7c8fa2;
+  font-size:12px;
+}
+
+/* iPhone/Safari auto-zooms focused form controls when their font-size is below 16px.
+   Keep input at 16px or more on narrow screens instead of disabling pinch zoom. */
+@media (max-width:760px){
+  input{
+    font-size:16px !important;
+  }
+}
+
+@media (max-width:560px){
+  input{
+    font-size:16px !important;
+  }
+
+  .field-hint{
+    font-size:11px;
+    margin-bottom:6px;
+  }
+}
