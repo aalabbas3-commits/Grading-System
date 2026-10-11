@@ -128,8 +128,8 @@ function renderResultRow(result) {
     : 0;
 
   return `
-    <article class="result-row">
-      <div class="result-title-wrap">
+    <article class="result-card">
+      <div class="result-card__exam">
         <div class="exam-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24">
             <path d="M7 3h8l4 4v14H7z"></path>
@@ -137,12 +137,21 @@ function renderResultRow(result) {
             <path d="M10 12h6M10 16h6"></path>
           </svg>
         </div>
-        <h3 class="result-title">${escapeHtml(result.exam_name || "اختبار")}</h3>
+        <div class="result-card__exam-copy">
+          <h3 class="result-card__exam-title">${escapeHtml(result.exam_name || "اختبار")}</h3>
+        </div>
       </div>
 
-      <div class="result-score">${formatNumber(score)} من ${formatNumber(max)}</div>
+      <div class="result-card__score">
+        <div class="score-label">الدرجة من ${formatNumber(max)}</div>
+        <div class="score-main">
+          <span class="score-main__value">${formatNumber(score)}</span>
+          <span class="score-main__sep">/</span>
+          <span class="score-main__max">${formatNumber(max)}</span>
+        </div>
+      </div>
 
-      <div class="result-progress">
+      <div class="result-card__meter">
         <span class="percent-badge">${formatNumber(Math.round(percentage))}%</span>
         <div class="progress-track" aria-hidden="true">
           <div class="progress-fill" style="width:${percentage.toFixed(1)}%"></div>
@@ -155,7 +164,6 @@ function renderResultRow(result) {
 function showEmpty(title, text) {
   document.getElementById("emptyTitle").textContent = title;
   document.getElementById("emptyText").textContent = text;
-
   resultArea.hidden = true;
   emptyState.hidden = false;
 }
@@ -177,9 +185,7 @@ function safeNumber(value) {
 
 function formatNumber(value) {
   const number = Number(value);
-
   if (!Number.isFinite(number)) return "0";
-
   return Number.isInteger(number)
     ? String(number)
     : String(number.toFixed(2)).replace(/\.?0+$/, "");
